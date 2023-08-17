@@ -1,0 +1,186 @@
+paths:
+  /:
+    get:
+      tags:
+        - Default
+      operationId: Welcome route
+      summary: Health check
+      description: BaseUrl. Returns an object when the server has started.
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+              example:
+                - success: true
+                  message: "Welcome to the Friends API"
+        500:
+          $ref: "#/components/responses/InternalError"
+
+
+  /friends/add:
+    post:
+      tags:
+        - Friends
+      operationId: New friend
+      summary: Add Friend
+      description: Append list of friends by data inputted by said user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewFriendRequestBody"
+      responses:
+        200:
+          description: success
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FriendResponse"
+            example:
+              - success: true
+                message: "Rico has been successfully added"
+                data:
+                  name: "Rico"
+                  email: "ricolewis@gmail.com"
+                  phone: +44 123 4567 890
+                  isDeleted: false
+                  id: "64c593b5c920fb52d223aa4a"
+                  createdAt: "2023-07-29T22:33:25.470Z"
+                  updatedAt: "2023-07-29T22:33:25.470Z"
+        422:
+          $ref: "#/components/responses/BadRequestError"
+        500:
+          $ref: "#/components/responses/InternalError"
+
+
+  /friends:
+    get:
+      tags:
+        - Friends
+      operationId: Get All Friends
+      summary: View All Friends
+      description: Display list of all friends inputted by said user
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/FriendResponse"
+        422:
+          $ref: "#/components/responses/BadRequestError"
+        500:
+          $ref: "#/components/responses/InternalError"
+
+
+
+  /friends/{id}:
+    get:
+      tags:
+        - Friend
+      operationId: Get A Friend
+      summary: View Specific Friend
+      description: Returns an object containing metadata of a friend
+      parameters:
+        - $ref: "#/components/parameters/FriendId"
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FriendResponse"
+        404:
+          $ref: "#/components/responses/NotFoundError"
+        422:
+          $ref: "#/components/responses/BadRequestError"
+        500:
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      tags:
+        - Friend
+      operationId: Update Friend
+      summary: Update a Chosen Friend
+      description: Updates a specific friend from the database
+      parameters:
+        - $ref: "#/components/parameters/FriendId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewFriendRequestBody"
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/FriendResponse"
+        404:
+          $ref: "#/components/responses/NotFoundError"
+        422:
+          $ref: "#/components/responses/BadRequestError"
+        500:
+          $ref: "#/components/responses/InternalError"
+
+
+    delete:
+      tags:
+        - Friend
+      operationId: Delete Friend
+      summary: Delete a Chosen Friend
+      description: Deletes a specific friend from the database
+      parameters:
+        - $ref: "#/components/parameters/FriendId"
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        404:
+          $ref: "#/components/responses/NotFoundError"
+        422:
+          $ref: "#/components/responses/BadRequestError"
+        500:
+          $ref: "#/components/responses/InternalError"

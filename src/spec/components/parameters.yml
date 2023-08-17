@@ -1,0 +1,9 @@
+components:
+  parameters:
+    FriendId:
+      in: path
+      name: id
+      description: Friend Id
+      required: true
+      schema:
+        type: string

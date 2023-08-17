@@ -1,0 +1,39 @@
+components:
+  schemas:
+    Message:
+      required:
+        - success
+        - message
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+
+
+    NewFriendRequestBody:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+
+
+    FriendResponse:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        id:
+          type: string
+        isDeleted:
+          type: boolean
+        createdAt:
+          type: string
+        updatedAt:
+          type: string

@@ -1,0 +1,32 @@
+components:
+  responses:
+    InternalError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schemas:
+            $ref: "#/components/schemas/Message"
+          example:
+            - success: false
+              message: Internal Server Error
+
+
+    BadRequestError:
+      description: Bad Request Error
+      content:
+        application/json:
+          schemas:
+            $ref: "#/components/schemas/Message"
+          example:
+            - success: false
+              message:  Validation Failed
+
+    NotFoundError:
+      description: Not Found Error
+      content:
+        application/json:
+          schemas:
+            $ref: "#/components/schemas/Message"
+          example:
+            - success: false
+              message:  Friend Not Found
